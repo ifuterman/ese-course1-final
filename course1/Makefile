@@ -34,6 +34,8 @@
 
 # Platform Overrides
 PLATFORM ?= HOST
+COURSE ?= COURSE1
+VERBOSE =
 include sources.mk
 
 #a = $(shell echo $(PLATFORM))
@@ -60,11 +62,16 @@ else
 	TOOL_CHAIN = arm-none-eabi-
 #!!!!!!!!!!!!!!!!!!flag -mfloat-abi=hard was changed to -mfloat-abi=soft, becouse armv7e-m is not supported by host machine!!!!!!!!!!!!!!!!!!!!!!!!!!!
 endif
+
+ifdef $(VERBOSE)
+	$(CPPFLAGS) = $(CPPFLAGS) -D$(VERBOSE)
+endif
+
 CC = $(TOOL_CHAIN)gcc
 OBJ=$(SOURCES:.c=.o)
 DEPS=$(SOURCES:.c=.dep)
 FILES = $(SOURCES:.c=)
-TARGET = c1m2
+TARGET ?= course1
 %.i: %.c
 	@echo "Generate preprocessed output for $(<) -> $@"
 	$(CC)  $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -E -o $@ -c $<
@@ -89,8 +96,9 @@ compile-all: $(OBJ)
 .PHONY: build
 build: $(DEPS) $(OBJ)
 	@echo "Compiling executable $(TARGET).out"
-	$(CC)  $(CPPFLAGS) $(LDFLAGS) -o $(TARGET).out $(SOURCES) $(INCLUDES) $(CFLAGS)
+	$(CC)  $(CPPFLAGS) $(LDFLAGS) -o $(TARGET).out $(SOURCES) $(INCLUDES) $(CFLAGS) -D$(COURSE)
 	$(TOOL_CHAIN)size -Atd $(TARGET).out
+	
 .PHONY: clean
 clean:
-	rm -f *.i *.out *.map *.asm *.o *.dep
+	rm -f src/*.i src/*.out src/*.map src/*.asm src/*.o src/*.dep

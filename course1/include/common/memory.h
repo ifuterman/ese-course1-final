@@ -22,6 +22,9 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
+#include <stddef.h>
+#include <stdint.h>
+
 /**
  * @brief Sets a value of a data array 
  *
@@ -89,5 +92,83 @@ void set_all(char * ptr, char value, unsigned int size);
  * @return void.
  */
 void clear_all(char * ptr, unsigned int size);
+/**
+ * @brief  Move data from the source location to the destination
+ *
+ * This function takes two byte pointers (one source and one destination) and 
+ * a length of bytes to move from the source location to the destination.
+ *
+ * @param src Source pointer
+ * @param dst Destination pointer
+ * @param length Length of bytes to move
+ *
+ * @return Pointer to destination
+ */
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length);
+
+/**
+ * @brief  Copy from the source location to the destination
+ *
+ * This function takes two byte pointers (one source and one destination) 
+ * and a length of bytes to copy from the source location to the destination.
+ *
+ * @param src Source pointer
+ * @param dst Destination pointer
+ * @param length Length of bytes to copy
+ *
+ * @return Pointer to destination
+ */
+uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length);
+
+/**
+ * @brief  Set all bytes to the given value
+ *
+ *
+ * @param src Source pointer
+ * @param length Length of bytes to set
+ * @param value Value will be set
+ *
+ * @return Pointer to destination
+ */
+uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value);
+
+/**
+ * @brief  Set all bytes to the 0
+ *
+ * @param src Source pointer
+ * @param length Length of bytes to set
+ *
+ * @return Pointer to source
+ */
+uint8_t * my_memzero(uint8_t * src, size_t length);
+
+/**
+ * @brief  Reverse the order of all of the bytes
+ *
+ * @param src Source pointer
+ * @param length Length of bytes to set
+ *
+ * @return Pointer to source
+ */
+uint8_t * my_reverse(uint8_t * src, size_t length);
+
+/**
+ * @brief  Allocates memory
+ *
+ * @param src Source pointer
+ * @param length count of words
+ *
+ * @return Pointer to allocated memory
+ */
+int32_t * reserve_words(size_t length);
+
+/**
+ * @brief  Free memory
+ *
+ * @param src Source pointer
+ *
+ * @return Pointer to allocated memory
+ */
+void free_words(uint32_t * src);
 
 #endif /* __MEMORY_H__ */

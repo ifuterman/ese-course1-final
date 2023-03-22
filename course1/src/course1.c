@@ -18,6 +18,7 @@
  */
 
 #include <stdint.h>
+#include <stdlib.h>
 #include "course1.h"
 #include "platform.h"
 #include "memory.h"
@@ -28,17 +29,18 @@ int8_t test_data1() {
   uint8_t * ptr;
   int32_t num = -4096;
   uint32_t digits;
-  int32_t value;
+  int32_t value;//digits = my_itoa( num, ptr, BASE_16);
 
-  PRINTF("\ntest_data1();\n");
+
+  PRINTF("\ntest_data()1;\n");
   ptr = (uint8_t*) reserve_words( DATA_SET_SIZE_W );
 
   if (! ptr )
   {
     return TEST_ERROR;
   }
-
   digits = my_itoa( num, ptr, BASE_16);   
+
   value = my_atoi( ptr, digits, BASE_16);
   #ifdef VERBOSE
   PRINTF("  Initial number: %d\n", num);
@@ -263,7 +265,7 @@ int8_t test_memset()
   }
 
   print_array(set, MEM_SET_SIZE_B);
-  my_memset(ptra, MEM_SET_SIZE_B, 0xFF);
+  my_memset(ptra, MEM_SET_SIZE_B, 0xFF); 
   print_array(set, MEM_SET_SIZE_B);
   my_memzero(ptrb, MEM_ZERO_LENGTH);
   print_array(set, MEM_SET_SIZE_B);
@@ -301,7 +303,7 @@ int8_t test_reverse()
   if (! copy )
   {
     return TEST_ERROR;
-  }
+  } 
   
   my_memcopy(set, copy, MEM_SET_SIZE_B);
 
@@ -339,6 +341,9 @@ void course1(void)
   for ( i = 0; i < TESTCOUNT; i++) 
   {
     failed += results[i];
+    if(results[i]){
+    	PRINTF("FAILED TEST #%d\n", i);
+    }
   }
 
   PRINTF("--------------------------------\n");

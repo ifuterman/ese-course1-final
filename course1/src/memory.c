@@ -20,7 +20,11 @@
  * @date April 1 2017
  *
  */
+ 
+#include <string.h>
+#include <stdlib.h>
 #include "memory.h"
+#include "platform.h"
 
 /***********************************************************
  Function Definitions
@@ -48,3 +52,36 @@ void clear_all(char * ptr, unsigned int size){
   set_all(ptr, 0, size);
 }
 
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length){
+	return memmove(dst, src, length);
+}	
+
+uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length){
+	return memcpy(dst, src, length);
+}
+
+uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value){
+	return memset(src, value, length);
+}
+
+uint8_t * my_memzero(uint8_t * src, size_t length){
+	return 	memset(src, 0, length);
+}
+
+uint8_t * my_reverse(uint8_t * src, size_t length){
+	uint8_t byte;
+	for(int i = 0; i < length / 2; i++){
+		byte = *(src + i);
+		*(src + i) = *(src + length - 1 - i);
+		*(src + length - 1 - i) = byte;
+	}
+	return src;
+}
+
+int32_t * reserve_words(size_t length){
+	return malloc(length * sizeof(int32_t));
+}
+
+void free_words(uint32_t * src){
+	free(src);
+}
